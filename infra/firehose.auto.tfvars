@@ -1,0 +1,5 @@
+firehose_stream_name="crypto-kinesis-stream"
+firehose_role_name="crypto-firehose-role"
+firehose_role_elastic_search_policy_name="crypto-firehose-post-elasticsearch"
+firehose_role_s3_policy_name="crypto-firehose-put-s3"
+s3_backup_mode="AllDocuments"
