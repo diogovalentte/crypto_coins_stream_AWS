@@ -1,0 +1,7 @@
+# Stuff
+secret
+.env
+
+# Terraform
+.terraform*
+terraform.tfstate*
