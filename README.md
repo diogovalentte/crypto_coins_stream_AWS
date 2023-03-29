@@ -1,14 +1,14 @@
 # Crypto Coins Stream AWS
 ## OBJECTIVES: 
 1. The current data of ten crypto coins (like Bitcoin and Ethereum) will be requested in the [mercado-bitcoin API](https://www.mercadobitcoin.net/api/) using an AWS Lambda Function.
-2. This Lambda function will send the collected data to an AWS Firehose Stream that will delivery the data to:
-	a. An index in an AWS Elasticsearch domain. This will allow to create a real time dashboard for visualization.
+2. This Lambda function will send the collected data to an AWS Firehose Stream that will deliver the data to:
+	a. An index in an AWS Elasticsearch domain. This will allow the creation of a real-time dashboard for visualization.
 	b. An AWS S3 bucket for archiving.
-- The AWS infrastructure will be automatically created using [Terraform](https://www.terraform.io). You can customize this project changing the Terraform files on the "**infra/**" folder.
+- The AWS infrastructure will be automatically created using [Terraform](https://www.terraform.io). You can customize this project by changing the Terraform files in the "**infra/**" folder.
 
 ---
 ## Data Schema:
-The bellow JSON is an example of the documents in the ElasticSearch index and the objects in the S3 bucket.
+The below JSON is an example of the documents in the ElasticSearch index and the objects in the S3 bucket.
 ```json
 {
 	  "collected_tstamp": "2022-09-09 13:00:00.00000",    # Timestamp that the AWS Lambda function collected the crypto data
@@ -31,12 +31,12 @@ The bellow JSON is an example of the documents in the ElasticSearch index and th
 ## Important folders/files:
 - **deploy/.env/**: File needed with your AWS credentials that will be used to create this project.
 - **infra/modules/**: Folder with Terraform files for the infrastructure as code (IaC).
-- **infra/resources/lambda/function/get_crypto_data.py**: The python script that get crypto coins data and send to an AWS Firehose Delivery Stream.
+- **infra/resources/lambda/function/get_crypto_data.py**: The python script that gets crypto coins data and sends it to an AWS Firehose Delivery Stream.
 ---
 # How to use this project:
 You should edit the files that ends with "**_.auto.tfvars_**" in the "**_infra_**" folder, especially:
 **infra/s3.auto.tfvars**: The "**s3_bucket_name**" variable.
-**infra/firehose.auto.tfvars**: The "**s3_backup_mode**" variable, can be "**FailedDocumentsOnly**" or "**AllDocuments**". Default is "**AllDocuments**". More info [here](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kinesis_firehose_delivery_stream#elasticsearch_configuration).
+**infra/firehose.auto.tfvars**: The "**s3_backup_mode**" variable, can be "**FailedDocumentsOnly**" or "**AllDocuments**". The default is "**AllDocuments**". More info [here](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kinesis_firehose_delivery_stream#elasticsearch_configuration).
 
 ### If you have Terraform and AWS CLI (configured with your credentials) installed in your local machine and don't want to use Docker:
 1. Execute the bellow commands to init Terraform:
@@ -58,7 +58,7 @@ terraform destroy
 ##### Requirements: Have [Docker](https://www.docker.com) and [Docker Compose](https://docs.docker.com/compose/install/#install-compose) installed on your machine.
 
 ---
-1. Create a file named "**.env**" inside the "**deploy/**" folder and write your **AWS credentials** for Terraform use to create the infrastructure, this file should follow the structure of the "**deply/.env.example**" file.
+1. Create a file named "**.env**" inside the "**deploy/**" folder and write your **AWS credentials** for Terraform to use to create the infrastructure, this file should follow the structure of the "**deploy/.env.example**" file.
 2. Execute the bellow command to init the Docker container and Terraform:
 ```sh
 docker-compose -f deploy/docker-compose.yaml run --rm terraform init
@@ -75,7 +75,7 @@ docker-compose -f deploy/docker-compose.yaml run --rm terraform destroy
 ---
 
 ### Configuring the AWS Firehose backend role on ElasticSearch:
-1. Open the "**Kibana Endpoint**" URL in the browser, login with your ElasticSearch master username and password configured in the **infra/elastic_search.auto.tfvars** file.
+1. Open the "**Kibana Endpoint**" URL in the browser, and login with your ElasticSearch master username and password configured in the **infra/elastic_search.auto.tfvars** file.
 2. Click on the "**Security**" section on the sidebar.
 3. Click on the "**Roles**" section.
 4. Click on the "**all_access**" role.
@@ -85,8 +85,8 @@ docker-compose -f deploy/docker-compose.yaml run --rm terraform destroy
 8. Now the AWS Firehose can send data to Elasticsearch.
 
 ## Testing:
-1. To test this project, go to the Lambda function on the AWS Console and test the function a couple times or add a Trigger to the function.
-2. Go to AWS S3 check the if the objects have been created.
+1. To test this project, go to the Lambda function on the AWS Console and test the function a couple of times or add a Trigger to the function.
+2. Go to AWS S3 to check if the objects have been created.
 3. Go to the "**Query Workbench**" section on Kibana to execute SQL or PPL queries on the Elasticsearch data, like:
 ```sql
 SHOW tables LIKE %; 			-- Show all indices in Elasticsearch
