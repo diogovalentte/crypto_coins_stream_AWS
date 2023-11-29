@@ -2,8 +2,10 @@
 ## OBJECTIVES: 
 1. The current data of ten crypto coins (like Bitcoin and Ethereum) will be requested in the [mercado-bitcoin API](https://www.mercadobitcoin.net/api/) using an AWS Lambda Function.
 2. This Lambda function will send the collected data to an AWS Firehose Stream that will deliver the data to:
-	a. An index in an AWS Elasticsearch domain. This will allow the creation of a real-time dashboard for visualization.
-	b. An AWS S3 bucket for archiving.
+	
+ 	a. An index in an AWS Elasticsearch domain. This will allow the creation of a real-time dashboard for visualization.
+
+ 	b. An AWS S3 bucket for archiving.
 - The AWS infrastructure will be automatically created using [Terraform](https://www.terraform.io). You can customize this project by changing the Terraform files in the "**infra/**" folder.
 
 ---
